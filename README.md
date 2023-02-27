@@ -4,5 +4,5 @@ another yet java obfuscator
 |-|-|
 | ✅ | Light flow obfuscation |
 | ✅ | String obfuscation |
-| ❌ | Numbers obfuscation |
+| ✅ | Numbers obfuscation |
 | ❌ | Heavy flow obfuscation |
