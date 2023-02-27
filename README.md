@@ -6,3 +6,4 @@ another yet java obfuscator
 | ✅ | String obfuscation |
 | ✅ | Numbers obfuscation |
 | ❌ | Heavy flow obfuscation |
+| ❌ |Invoke dynamic obfuscation |
