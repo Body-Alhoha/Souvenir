@@ -15,8 +15,8 @@ public class BytecodeFlowTransformer extends Transformer {
 
         int m = Obfuscator.getInstance().r.nextInt(3);
         if(m == 0){
-            flow.add(new IntInsnNode(BIPUSH, (int) (Math.floor(Math.random() * 60) - 30)));
-            flow.add(new IntInsnNode(BIPUSH, (int) (Math.floor(Math.random() * 60)) - 30));
+            flow.add(new IntInsnNode(BIPUSH, Obfuscator.getInstance().r.nextInt(60) - 30));
+            flow.add(new IntInsnNode(BIPUSH, Obfuscator.getInstance().r.nextInt(60) - 30));
             int r = Obfuscator.getInstance().r.nextInt(3);
             if(r == 0){
                 flow.add(new InsnNode(Opcodes.IAND));
@@ -33,7 +33,7 @@ public class BytecodeFlowTransformer extends Transformer {
             flow.add(new LdcInsnNode(RandomUtils.getRandomUTF(10)));
             flow.add(new InsnNode(POP));
         }
-        if(m == 1){
+        if(m == 2){
             flow.add(new InsnNode(Obfuscator.getInstance().r.nextBoolean() ? Opcodes.ICONST_1 : Opcodes.ICONST_0));
             flow.add(new InsnNode(POP));
         }
