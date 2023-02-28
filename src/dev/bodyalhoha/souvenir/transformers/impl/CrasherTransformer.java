@@ -13,7 +13,7 @@ public class CrasherTransformer extends Transformer {
         if((cn.access & ACC_INTERFACE) == ACC_INTERFACE) {
             return;
         }
-        AnnotationNode an = new AnnotationNode(RandomUtils.getRandomAscii(6));
+        AnnotationNode an = new AnnotationNode("github.com/Body-Alhoha/souvenir");
         if(cn.invisibleAnnotations == null)
             cn.invisibleAnnotations = new ArrayList<>();
         cn.invisibleAnnotations.add(an);

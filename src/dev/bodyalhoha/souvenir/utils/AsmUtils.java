@@ -20,7 +20,7 @@ public class AsmUtils {
         }
         return new LdcInsnNode(value);
     }
-    
+
 
     public static long getAmountOf(int opcode, MethodNode mn){
         return Arrays.stream(mn.instructions.toArray()).filter(insn -> insn.getOpcode() == opcode).count();
