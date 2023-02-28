@@ -22,9 +22,9 @@ public class Obfuscator {
             new ShrinkTransformer(),
             new FlowTransformer(),
             new BytecodeFlowTransformer(),
+            new InvokeDynamicTransformer(),
             new StringTransformer(),
-            new NumberTransformer(),
-            new InvokeDynamicTransformer()
+            new NumberTransformer()
     );
 
     public final Random r = new Random();
