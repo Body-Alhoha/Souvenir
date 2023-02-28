@@ -16,10 +16,11 @@ public class Obfuscator {
             new CrasherTransformer(),
             new EmptyFlowTransformer(),
             new ShrinkTransformer(),
-            new IntTransformer(),
             new FlowTransformer(),
             new BytecodeFlowTransformer(),
-            new StringTransformer()
+            new StringTransformer(),
+            new NumberTransformer(),
+            new InvokeDynamicTransformer()
     );
 
     public final Random r = new Random();

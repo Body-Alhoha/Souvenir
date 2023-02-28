@@ -62,11 +62,10 @@ public class BytecodeFlowTransformer extends Transformer {
             }
             mn.instructions.insertBefore(mn.instructions.getFirst(), getRandomFlow());
             Arrays.stream(mn.instructions.toArray()).forEach((insn) -> {
-                if(insn.getOpcode() == Opcodes.BIPUSH || insn.getOpcode() == Opcodes.SIPUSH || insn.getOpcode() == Opcodes.LDC){
-                    if(Obfuscator.getInstance().r.nextInt( 2) == 1){
-                        for(int i = 0; i < 2 + Obfuscator.getInstance().r.nextInt(5); i++){
-                            mn.instructions.insert(insn, getRandomFlow());
-                        }
+                if(insn.getOpcode() == Opcodes.BIPUSH || insn.getOpcode() == Opcodes.SIPUSH || insn.getOpcode() == Opcodes.LDC || insn.getOpcode() == Opcodes.ISTORE || insn.getOpcode() == Opcodes.DSTORE){
+                    if(Obfuscator.getInstance().r.nextInt( 5) == 1){
+                        mn.instructions.insert(insn, getRandomFlow());
+
                     }
                 }
             });
