@@ -1,5 +1,5 @@
 # Souvenir
-#### another yet java obfuscator
+#### yet another java obfuscator
 
 | | Feature
 |-|-|
