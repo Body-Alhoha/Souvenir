@@ -1,4 +1,4 @@
-package dev.bodyalhoha.souvenir.transformers.impl;
+package dev.bodyalhoha.souvenir.transformers.impl.flow;
 
 import dev.bodyalhoha.souvenir.Obfuscator;
 import dev.bodyalhoha.souvenir.transformers.Transformer;
@@ -17,7 +17,7 @@ public class BytecodeFlowTransformer extends Transformer {
         if(m == 0){
             flow.add(new IntInsnNode(BIPUSH, Obfuscator.getInstance().r.nextInt(60) - 30));
             flow.add(new IntInsnNode(BIPUSH, Obfuscator.getInstance().r.nextInt(60) - 30));
-            int r = Obfuscator.getInstance().r.nextInt(3);
+            int r = Obfuscator.getInstance().r.nextInt(4);
             if(r == 0){
                 flow.add(new InsnNode(Opcodes.IAND));
             }
@@ -26,6 +26,9 @@ public class BytecodeFlowTransformer extends Transformer {
             }
             if(r == 2){
                 flow.add(new InsnNode(POP));
+            }
+            if(r == 3){
+                flow.add(new InsnNode(Opcodes.ISUB));
             }
             flow.add(new InsnNode(POP));
         }
@@ -63,7 +66,7 @@ public class BytecodeFlowTransformer extends Transformer {
             mn.instructions.insertBefore(mn.instructions.getFirst(), getRandomFlow());
             Arrays.stream(mn.instructions.toArray()).forEach((insn) -> {
                 if(insn.getOpcode() == Opcodes.BIPUSH || insn.getOpcode() == Opcodes.SIPUSH || insn.getOpcode() == Opcodes.LDC || insn.getOpcode() == Opcodes.ISTORE || insn.getOpcode() == Opcodes.DSTORE){
-                    if(Obfuscator.getInstance().r.nextInt( 5) == 1){
+                    if(Obfuscator.getInstance().r.nextInt( 10) == 1){
                         mn.instructions.insert(insn, getRandomFlow());
 
                     }

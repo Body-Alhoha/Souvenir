@@ -13,9 +13,7 @@ public class ShrinkTransformer extends Transformer {
         cn.sourceDebug = "";
         cn.sourceFile = "";
         cn.methods.forEach(mn -> {
-            if(mn.localVariables != null){
-                mn.localVariables.forEach(lv -> lv.name = "souvenir" + RandomUtils.getRandomAscii(5));
-            }
+            mn.localVariables = null;
             Arrays.stream(mn.instructions.toArray()).forEach((insn) -> {
                 if(insn instanceof LineNumberNode)
                     mn.instructions.remove(insn);

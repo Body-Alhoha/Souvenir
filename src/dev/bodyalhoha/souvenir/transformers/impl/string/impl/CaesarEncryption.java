@@ -1,33 +1,31 @@
-package dev.bodyalhoha.souvenir.transformers.impl;
+package dev.bodyalhoha.souvenir.transformers.impl.string.impl;
 
-import dev.bodyalhoha.souvenir.Obfuscator;
-import dev.bodyalhoha.souvenir.transformers.Transformer;
+import dev.bodyalhoha.souvenir.transformers.impl.string.IStringEncryptionMethod;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.MethodNode;
 
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-public class StringTransformer extends Transformer {
-
-    public static String encrypt(String s, int v){
+public class CaesarEncryption implements IStringEncryptionMethod {
+    @Override
+    public String encrypt(String v, int key) {
         StringBuilder a = new StringBuilder();
-        for(int i = 0; i < s.length(); i++){
-            a.append((char)((int)s.toCharArray()[i] + v));
+        for(int i = 0; i < v.length(); i++){
+            a.append((char)((int)v.toCharArray()[i] + key));
         }
         return a.toString();
     }
 
-    public static String decrypt(String s, int v){
+    @Override
+    public String decrypt(String v, int key) {
         StringBuilder a = new StringBuilder();
-        for(int i = 0; i < s.length(); i++){
-            a.append((char)((int)s.toCharArray()[i] - v));
+        for(int i = 0; i < v.length(); i++){
+            a.append((char)((int)v.toCharArray()[i] - key));
         }
         return a.toString();
     }
 
-    public MethodNode makeStringDecrypt(String name){
+    @Override
+    public MethodNode createDecrypt(String name) {
         MethodNode methodVisitor = new MethodNode(Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC, name, "(Ljava/lang/String;I)Ljava/lang/String;", null, null);
         methodVisitor.visitCode();
         Label label0 = new Label();
@@ -84,34 +82,5 @@ public class StringTransformer extends Transformer {
         methodVisitor.visitEnd();
 
         return methodVisitor;
-    }
-
-    @Override
-    public void run(ClassNode cn) {
-        if((cn.access & ACC_INTERFACE) == ACC_INTERFACE) {
-            return;
-        }
-        AtomicBoolean has = new AtomicBoolean(false);
-        MethodNode decryptMethod = makeStringDecrypt(Obfuscator.getInstance().r.nextInt(1000) + "");
-        cn.methods.forEach(mn -> {
-
-            Arrays.stream(mn.instructions.toArray()).forEach(insn -> {
-                if(insn.getOpcode() == Opcodes.LDC && ((LdcInsnNode)insn).cst instanceof String){
-                    LdcInsnNode ldc = (LdcInsnNode) insn;
-                    if(ldc.cst instanceof String){
-                        int decryptValue = Obfuscator.getInstance().r.nextInt(30) + 6;
-                        has.set(true);
-                        ldc.cst = encrypt((String)ldc.cst, decryptValue);
-                        mn.instructions.insert(ldc, new MethodInsnNode(Opcodes.INVOKESTATIC, cn.name, decryptMethod.name, "(Ljava/lang/String;I)Ljava/lang/String;", false));
-                        mn.instructions.insert(ldc, new IntInsnNode(BIPUSH, decryptValue));
-
-                    }
-                }
-            });
-        });
-
-        if(has.get()){
-            cn.methods.add(decryptMethod);
-        }
     }
 }

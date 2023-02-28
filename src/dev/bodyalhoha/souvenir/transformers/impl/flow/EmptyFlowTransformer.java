@@ -1,4 +1,4 @@
-package dev.bodyalhoha.souvenir.transformers.impl;
+package dev.bodyalhoha.souvenir.transformers.impl.flow;
 
 import dev.bodyalhoha.souvenir.Obfuscator;
 import dev.bodyalhoha.souvenir.transformers.Transformer;
@@ -60,7 +60,7 @@ public class EmptyFlowTransformer extends Transformer {
                 return;
 
 
-            mn.instructions.insertBefore(mn.instructions.getFirst(), getFlow(3));
+            mn.instructions.insertBefore(mn.instructions.getFirst(), getFlow(1));
 
 
             Arrays.stream(mn.instructions.toArray()).forEach((insn) -> {
@@ -81,7 +81,7 @@ public class EmptyFlowTransformer extends Transformer {
                         if(Obfuscator.getInstance().r.nextBoolean()){
                             mn.instructions.insertBefore(insn, getSwitches());
                         }else{
-                            mn.instructions.insertBefore(insn, getFlow(Obfuscator.getInstance().r.nextInt(1) + 1));
+                            mn.instructions.insertBefore(insn,getFlow(1));
 
                         }
 

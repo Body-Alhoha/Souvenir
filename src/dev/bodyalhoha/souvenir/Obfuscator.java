@@ -2,6 +2,10 @@ package dev.bodyalhoha.souvenir;
 
 import dev.bodyalhoha.souvenir.transformers.Transformer;
 import dev.bodyalhoha.souvenir.transformers.impl.*;
+import dev.bodyalhoha.souvenir.transformers.impl.flow.BytecodeFlowTransformer;
+import dev.bodyalhoha.souvenir.transformers.impl.flow.EmptyFlowTransformer;
+import dev.bodyalhoha.souvenir.transformers.impl.flow.FlowTransformer;
+import dev.bodyalhoha.souvenir.transformers.impl.string.StringTransformer;
 import dev.bodyalhoha.souvenir.utils.JarLoader;
 
 import java.util.Arrays;
