@@ -17,11 +17,7 @@ public class CaesarEncryption implements IStringEncryptionMethod {
 
     @Override
     public String decrypt(String v, int key) {
-        StringBuilder a = new StringBuilder();
-        for(int i = 0; i < v.length(); i++){
-            a.append((char)((int)v.toCharArray()[i] - key));
-        }
-        return a.toString();
+        return encrypt(v, -key);
     }
 
     @Override

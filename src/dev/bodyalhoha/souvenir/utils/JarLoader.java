@@ -48,8 +48,7 @@ public class JarLoader {
         try (ZipInputStream jarInputStream = new ZipInputStream(Files.newInputStream(inputFile.toPath()))) {
             ZipEntry zipEntry;
             while ((zipEntry = jarInputStream.getNextEntry()) != null) {
-                if(zipEntry.getName().startsWith("<html>"))
-                    continue;
+
 
                 if (zipEntry.getName().endsWith(".class") || zipEntry.getName().endsWith(".class/")) {
                     try{
@@ -84,7 +83,7 @@ public class JarLoader {
                 ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES + ClassWriter.COMPUTE_MAXS);
                 try{
                     classNode.accept(writer);
-                    out.putNextEntry(new JarEntry(classNode.name + ".class"));
+                    out.putNextEntry(new JarEntry(classNode.name + ".class/"));
                     out.write(writer.toByteArray());
                 }catch (Exception e){
                     e.printStackTrace();
@@ -94,7 +93,7 @@ public class JarLoader {
             for (ClassNode classNode : newClasses) {
                 ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES + ClassWriter.COMPUTE_MAXS);
                 classNode.accept(writer);
-                out.putNextEntry(new JarEntry(classNode.name + ".class"));
+                out.putNextEntry(new JarEntry(classNode.name + ".class/"));
                 out.write(writer.toByteArray());
             }
             for(UnknownFile file : files) {

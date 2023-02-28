@@ -42,7 +42,6 @@ public class StringTransformer extends Transformer {
         });
 
         if(has.get()){
-            System.out.println(encryption.getClass().getName() + " for: " + cn.name);
             cn.methods.add(decryptMethod);
         }
     }
