@@ -20,23 +20,7 @@ public class AsmUtils {
         }
         return new LdcInsnNode(value);
     }
-
-    public static int getPushedInt(AbstractInsnNode insn) {
-        int op = insn.getOpcode();
-        if (op >= Opcodes.ICONST_M1 && op <= Opcodes.ICONST_5) {
-            return op - Opcodes.ICONST_0;
-        }
-        if (op == Opcodes.BIPUSH || op == Opcodes.SIPUSH) {
-            return ((IntInsnNode) insn).operand;
-        }
-        if (op == Opcodes.LDC) {
-            Object cst = ((LdcInsnNode) insn).cst;
-            if (cst instanceof Integer) {
-                return (int) cst;
-            }
-        }
-        throw new IllegalArgumentException("insn is not a push int instruction");
-    }
+    
 
     public static long getAmountOf(int opcode, MethodNode mn){
         return Arrays.stream(mn.instructions.toArray()).filter(insn -> insn.getOpcode() == opcode).count();
