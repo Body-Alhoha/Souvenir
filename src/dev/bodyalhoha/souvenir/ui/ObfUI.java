@@ -3,15 +3,28 @@ package dev.bodyalhoha.souvenir.ui;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import dev.bodyalhoha.souvenir.Obfuscator;
+import dev.bodyalhoha.souvenir.transformers.Transformer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 
 public class ObfUI extends JFrame {
 
         public ObfUI(){
             super("Body Obf!!");
+//            set up package file
+            File packageFile = new File("package.txt");
+            if(!packageFile.exists()){
+                try{
+                    packageFile.createNewFile();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+
             try {
                 FlatLightLaf.install();
             } catch (Exception e) {
@@ -19,16 +32,16 @@ public class ObfUI extends JFrame {
             }
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
-            setSize(300, 150);
+            setSize(300, 400);
             setResizable(false);
-            init();
+            init(packageFile);
             setVisible(true);
         }
 
         public static void main(String[] args){
             new ObfUI();
         }
-        public void init(){
+        public void init(File packageFile){
             JPanel panel = new JPanel();
             add(panel);
             panel.setLayout(new BorderLayout());
@@ -70,6 +83,28 @@ public class ObfUI extends JFrame {
             JButton button3 = new JButton("Select");
             center.add(button3);
 
+            JLabel label5 = new JLabel("Package:");
+            center.add(label5);
+
+            JTextField pack2 = new JTextField(10);
+            pack2.setText(packageFile.getAbsolutePath());
+            center.add(pack2);
+
+            JButton button4 = new JButton("Select");
+            center.add(button4);
+
+
+//            add transformers list
+            JLabel label4 = new JLabel("Transformers:");
+            center.add(label4);
+
+            JCheckBox[] boxes = new JCheckBox[Obfuscator.getInstance().getTransformers().size()];
+            for(int i = 0; i < boxes.length; i++){
+                boxes[i] = new JCheckBox(Obfuscator.getInstance().getTransformers().get(i).getClass().getSimpleName());
+                center.add(boxes[i]);
+            }
+
+
             button2.addActionListener(e -> {
                 JFileChooser chooser = new JFileChooser();
 //                set the default directory to the current directory
@@ -89,6 +124,15 @@ public class ObfUI extends JFrame {
                 pack.setText(f.getAbsolutePath());
             });
 
+            button4.addActionListener(e -> {
+                JFileChooser chooser = new JFileChooser();
+                chooser.setCurrentDirectory(new java.io.File("."));
+                chooser.showOpenDialog(null);
+                File f = chooser.getSelectedFile();
+                pack2.setText(f.getAbsolutePath());
+            });
+
+
             button.addActionListener(e -> {
                 String p = path.getText();
                 String pa = pack.getText();
@@ -102,7 +146,39 @@ public class ObfUI extends JFrame {
                     return;
                 }
                 try{
-                    Obfuscator.getInstance().obfuscate(path.getText(), path.getText());
+//                  transform handlers
+                    java.util.List<Transformer> selected = new ArrayList<>();
+                    for(int i = 0; i < boxes.length; i++){
+                        if(boxes[i].isSelected()){
+                            selected.add(Obfuscator.getInstance().getTransformers().get(i));
+                        }
+                    }
+                    if(selected.isEmpty()){
+                        JOptionPane.showMessageDialog(null, "No transformers selected!");
+                        return;
+                    }
+
+                    selected.forEach(tf -> System.out.println("Selected transformer: " + tf.getClass().getSimpleName()));
+//                    get inside package.txt file
+                    String packageFormat="";
+                    File packageFilef = new File(pack2.getText());
+//                    read txt file
+                    java.util.Scanner scanner = new java.util.Scanner(packageFilef);
+                    String pscanner = scanner.nextLine();
+                    for (int i = 0; i < pscanner.length(); i++) {
+                        if (pscanner.charAt(i) == '.') {
+                            packageFormat += "/";
+                        } else {
+                            packageFormat += pscanner.charAt(i);
+                        }
+                    }
+
+                    scanner.close();
+
+                    System.out.println("Package format: " + packageFormat);
+
+
+                    Obfuscator.getInstance().obfuscate(path.getText(), pack.getText(), packageFormat, selected);
                 }catch (Exception ex){
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Obfuscation failed! Check the console for more info.");

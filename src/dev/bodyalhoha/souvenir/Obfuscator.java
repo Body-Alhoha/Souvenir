@@ -35,8 +35,8 @@ public class Obfuscator {
         return instance;
     }
 
-    public void obfuscate(String input, String pkg) throws Exception{
-        JarLoader loader = new JarLoader(input, input.substring(0, input.length() - 4) + "-obfuscated.jar");
+    public void obfuscate(String input, String output, String pkg, List<Transformer> transformers) throws Exception{
+        JarLoader loader = new JarLoader(input, output);
         System.out.println("[core] Loading the jar...");
         loader.loadJar();
 
@@ -44,7 +44,10 @@ public class Obfuscator {
 
         System.out.println("[core] Saving the jar...");
         loader.saveJar();
+    }
 
+    public List<Transformer> getTransformers() {
+        return transformers;
     }
 
 }
