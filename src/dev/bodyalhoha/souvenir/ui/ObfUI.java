@@ -90,7 +90,7 @@ public class ObfUI extends JFrame {
             pack2.setText(packageFile.getAbsolutePath());
             center.add(pack2);
 
-            JButton button4 = new JButton("Select");
+            JButton button4 = new JButton("Open");
             center.add(button4);
 
 
@@ -125,11 +125,11 @@ public class ObfUI extends JFrame {
             });
 
             button4.addActionListener(e -> {
-                JFileChooser chooser = new JFileChooser();
-                chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.showOpenDialog(null);
-                File f = chooser.getSelectedFile();
-                pack2.setText(f.getAbsolutePath());
+                try{
+                    Desktop.getDesktop().open(packageFile);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
             });
 
 
