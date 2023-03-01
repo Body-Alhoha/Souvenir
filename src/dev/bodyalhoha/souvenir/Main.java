@@ -5,6 +5,7 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args){
+//        check if run by double click
         if(args.length < 2){
             System.out.println("Usage: java -jar obf.jar file.jar package");
             return;
