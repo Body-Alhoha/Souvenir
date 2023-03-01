@@ -11,7 +11,7 @@ public class Main {
         }
         File f = new File(args[0]);
         if(!f.exists()){
-            System.out.println("Input file does not exists!");
+            System.out.println("Input file does not exist!");
             return;
         }
 
