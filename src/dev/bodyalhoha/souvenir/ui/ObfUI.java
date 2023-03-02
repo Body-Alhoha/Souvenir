@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ObfUI extends JFrame {
 
         public ObfUI(){
-            super("Body Obf!!");
+            super("souvenir obf!!");
 //            set up package file
             File packageFile = new File("package.txt");
             if(!packageFile.exists()){
@@ -50,7 +50,7 @@ public class ObfUI extends JFrame {
             panel.add(top, BorderLayout.NORTH);
             top.setLayout(new FlowLayout());
 
-            JLabel label = new JLabel("Body Alhoha Obfuscatar!!");
+            JLabel label = new JLabel("Souvenir Obfuscatar!!");
             top.add(label);
 
             JPanel bottom = new JPanel();
