@@ -111,6 +111,7 @@ public class ObfUI extends JFrame {
                 chooser.setCurrentDirectory(new java.io.File("."));
                 chooser.showOpenDialog(null);
                 File f = chooser.getSelectedFile();
+                path.setText(f.getAbsolutePath());
                 pack.setText(f.getAbsolutePath().replace(".jar", "_obf.jar"));
             });
 
