@@ -11,7 +11,7 @@ public class InvokeDynamicTransformer extends Transformer {
     public void run(ClassNode cn) {
         cn.methods.forEach(mn -> {
             Arrays.stream(mn.instructions.toArray()).forEach(insn -> {
-                // soon:tm:
+                // soon™
             });
         });
     }

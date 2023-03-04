@@ -16,3 +16,6 @@
 <h2>After</h2>
 <img src="imgs/main_after.png">
 
+Thanks to: <br>
+[SkidSuite](https://github.com/GenericException/SkidSuite)<br>
+[Recaf](https://github.com/Col-E/Recaf)
